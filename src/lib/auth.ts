@@ -2,10 +2,7 @@ import { getServerSession, NextAuthOptions } from "next-auth";
 import { db } from "./db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
-<<<<<<< HEAD
 import GithubProvider from "next-auth/providers/github";
-=======
->>>>>>> c647f227a0946b9f673b51297832ddefbe6e7665
 import { nanoid } from "nanoid";
 
 export const authOptions: NextAuthOptions = {
@@ -21,15 +18,12 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-<<<<<<< HEAD
       allowDangerousEmailAccountLinking: true,
     }),
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
       allowDangerousEmailAccountLinking: true,
-=======
->>>>>>> c647f227a0946b9f673b51297832ddefbe6e7665
     }),
   ],
   callbacks: {
