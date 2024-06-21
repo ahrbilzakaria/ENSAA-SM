@@ -9,13 +9,42 @@ import {
 import { Input } from "@/pre-components/input";
 import { Label } from "@/pre-components/label";
 import { cn } from "@/lib/utils";
+import { toast } from "@/hooks/use-toast";
+import { signIn } from "next-auth/react";
 
 export default function SignupForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    // console.log("Form submitted");
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+  const SignInWithGoogle = async () => {
+    setIsLoading(true);
+    try {
+      await signIn("google");
+    } catch (e) {
+      toast({
+        title: "error",
+        description: "There was an error",
+        variant: "destructive",
+      });
+    }
+    setIsLoading(false);
+  };
+  const loginWithGithub = async () => {
+    setIsLoading(true);
+    try {
+      await signIn("google");
+    } catch (e) {
+      toast({
+        title: "error",
+        description: "There was an error",
+        variant: "destructive",
+      });
+    }
+    setIsLoading(false);
+  };
   return (
     <div className=" w-[90%] lg:w-[60%] mx-auto rounded-md  p-4 md:p-8  bg-white dark:bg-gray-900">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
@@ -49,7 +78,7 @@ export default function SignupForm() {
           className="py-2 px-4 bg-gray-900 dark:bg-white text-white hover:bg-gray-500 hover:text-white dark:text-black relative group/btn  w-full  rounded-md h-10 font-semibold "
           type="submit"
         >
-          Sign up &rarr;
+          Sign In &rarr;
         </button>
 
         <div className="bg-gray-900 dark:bg-white  my-8 h-[1px] w-full" />
@@ -68,8 +97,14 @@ export default function SignupForm() {
           <button
             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="submit"
+            onClick={() => {
+              SignInWithGoogle();
+            }}
+            disabled={isLoading}
           >
-            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+            {isLoading ? null : (
+              <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+            )}
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
               Google
             </span>

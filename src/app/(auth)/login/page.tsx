@@ -1,11 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-  IconBrandOnlyfans,
-} from "@tabler/icons-react";
+import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { Input } from "@/pre-components/input";
 import { Label } from "@/pre-components/label";
 import { cn } from "@/lib/utils";
@@ -22,7 +18,7 @@ export default function LoginForm() {
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      throw new Error();
+      await signIn("google");
     } catch (e) {
       toast({
         title: "error",
@@ -32,10 +28,11 @@ export default function LoginForm() {
     }
     setIsLoading(false);
   };
+
   const loginWithGithub = async () => {
     setIsLoading(true);
     try {
-      throw new Error();
+      await signIn("github");
     } catch (e) {
       toast({
         title: "error",
