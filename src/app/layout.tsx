@@ -23,6 +23,7 @@ export default function RootLayout({
     >
       <body className=" bg-slate-50 antialiased" suppressHydrationWarning>
         <Navbar />
+        {authModal}
         <div className="w-[80%] z-0 mx-auto pt-[8rem] min-h-screen">
           {children}
         </div>

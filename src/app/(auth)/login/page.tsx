@@ -7,8 +7,14 @@ import { Label } from "@/pre-components/label";
 import { cn } from "@/lib/utils";
 import { signIn } from "next-auth/react";
 import { toast } from "@/hooks/use-toast";
+import Link from "next/link";
+import CloseButton from "@/components/CloseButton";
 
-export default function LoginForm() {
+type SignupParams = {
+  state : boolean;
+}
+
+export default function LoginForm({state}: SignupParams) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // console.log("Form submitted");
@@ -45,12 +51,16 @@ export default function LoginForm() {
 
   return (
     <div className=" w-[90%] lg:w-[60%] mx-auto rounded-md  p-4 md:p-8  bg-white dark:bg-gray-900">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Welcome back to ENSAA-SM
+      
+      <div className="w-full flex items-start justify-between">
+        <div><h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
+        Welcome to ENSAA-SM
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login to ENSAA-SM if you can
-      </p>
+      Login to ENSAA-SM if you can
+      </p></div>
+      {state && <CloseButton></CloseButton>}
+      </div>
 
       <form className="my-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
@@ -68,6 +78,8 @@ export default function LoginForm() {
         >
           Login &rarr;
         </button>
+        <p className="text-neutral-600 text-sm max-w-sm mt-2 -mb-2 dark:text-neutral-300">You don't have an account ? <Link href={"/signup"} className="font-bold underline-offset-1 underline text-neutral-900">Sign up</Link></p>
+      
 
         <div className="bg-gray-900 dark:bg-white  my-8 h-[1px] w-full" />
 

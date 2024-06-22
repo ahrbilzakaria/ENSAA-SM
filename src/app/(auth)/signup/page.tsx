@@ -4,15 +4,20 @@ import React, { useState } from "react";
 import {
   IconBrandGithub,
   IconBrandGoogle,
-  IconBrandOnlyfans,
 } from "@tabler/icons-react";
 import { Input } from "@/pre-components/input";
 import { Label } from "@/pre-components/label";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
+import CloseButton from "@/components/CloseButton";
 
-export default function SignupForm() {
+type SignupParams = {
+  state : boolean;
+}
+
+export default function SignupForm({state}: SignupParams) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // console.log("Form submitted");
@@ -32,10 +37,10 @@ export default function SignupForm() {
     }
     setIsLoading(false);
   };
-  const loginWithGithub = async () => {
+  const SignInWithGithub = async () => {
     setIsLoading(true);
     try {
-      await signIn("google");
+      await signIn("github");
     } catch (e) {
       toast({
         title: "error",
@@ -47,12 +52,17 @@ export default function SignupForm() {
   };
   return (
     <div className=" w-[90%] lg:w-[60%] mx-auto rounded-md  p-4 md:p-8  bg-white dark:bg-gray-900">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
+      
+      <div className="w-full flex items-start justify-between">
+        <div><h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Welcome to ENSAA-SM
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
         Signup to ENSAA-SM if you can
-      </p>
+      </p></div>
+      {state && <CloseButton></CloseButton>}
+      </div>
+      
 
       <form className="my-8" onSubmit={handleSubmit}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
@@ -78,17 +88,23 @@ export default function SignupForm() {
           className="py-2 px-4 bg-gray-900 dark:bg-white text-white hover:bg-gray-500 hover:text-white dark:text-black relative group/btn  w-full  rounded-md h-10 font-semibold "
           type="submit"
         >
-          Sign In &rarr;
+          Sign UP &rarr;
         </button>
-
+        <p className="text-neutral-600 text-sm -mb-2 max-w-sm mt-2 dark:text-neutral-300">You already have an account ? <Link href={"/login"} className="font-bold underline-offset-1 underline text-neutral-900">Login</Link></p>
         <div className="bg-gray-900 dark:bg-white  my-8 h-[1px] w-full" />
 
         <div className="flex flex-col space-y-4">
           <button
             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="submit"
+            onClick={() => {
+              SignInWithGithub();
+            }}
+            disabled={isLoading}
           >
-            <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+            {isLoading ? null : (
+              <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+            )}
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
               GitHub
             </span>

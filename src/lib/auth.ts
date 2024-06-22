@@ -1,11 +1,11 @@
-import { getServerSession, NextAuthOptions } from "next-auth";
 import { db } from "./db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import { nanoid } from "nanoid";
+import NextAuth from "next-auth";
 
-export const authOptions: NextAuthOptions = {
+export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET as string,
   adapter: PrismaAdapter(db),
   session: {
@@ -32,7 +32,9 @@ export const authOptions: NextAuthOptions = {
         session.user.name = token.name;
         session.user.id = token.id;
         session.user.image = token.picture;
-        session.user.email = token.email;
+        if (token.email) {
+          session.user.email = token.email;
+        }
         session.user.username = token.username;
       }
       return session;
@@ -44,7 +46,9 @@ export const authOptions: NextAuthOptions = {
         },
       });
       if (!dbUser) {
-        token.id = user!.id;
+        if(user!.id){
+          token.id = user!.id;
+        }
         return token;
       }
       if (!dbUser.username) {
@@ -69,6 +73,6 @@ export const authOptions: NextAuthOptions = {
       return "/";
     },
   },
-};
+})
 
-export const getAuthSession = () => getServerSession(authOptions);
+

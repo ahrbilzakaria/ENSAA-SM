@@ -1,11 +1,11 @@
 import { AtSign, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import Button from "./ui/button";
-import { getAuthSession } from "@/lib/auth";
 import UserAccountNav from "./UserAccountNav";
+import getSession from "@/lib/getSession";
 
 export default async function Navbar() {
-  const session = await getAuthSession();
+  const session = await getSession();
   const user = session?.user;
   console.log(session);
   return (
@@ -21,7 +21,7 @@ export default async function Navbar() {
         <div className="flex gap-2">
           <Link href="/signup" className="">
             <Button className="text-white">
-              <p>Sign In</p>
+              <p>Sign Up</p>
             </Button>
           </Link>
           <Link href="/login" className="">

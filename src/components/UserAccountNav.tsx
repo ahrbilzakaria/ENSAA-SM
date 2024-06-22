@@ -10,6 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { AtSign, LogOut, User as US } from "lucide-react";
+import { signOut } from "@/lib/auth";
+
 
 interface UserAccountNavProps {
   user: Pick<User, "email" | "image" | "name">;
@@ -21,7 +23,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar className="outline-1 outline hover:outline-0 cursor-pointer outline-offset-2 outline-gray-200">
-            <AvatarImage src={user.image!} alt={user.name!} />
+            <AvatarImage src={user.image!} alt={user.name!} referrerPolicy="no-referrer" />
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -39,7 +41,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
             <form
               action={async () => {
                 "use server";
-                // await signOut();
+                await signOut();
               }}
             >
               <button type="submit" className="flex w-full items-center">
