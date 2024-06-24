@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/Toaster";
 import { cn } from "@/lib/utils";
-
+import { Providers } from "@/components/Providers";
 import "@/styles/globals.css";
 
 export const metadata = {
@@ -22,12 +22,14 @@ export default function RootLayout({
       className={cn("bg-white text-slate-900 antialiased light", "")}
     >
       <body className=" bg-slate-50 antialiased" suppressHydrationWarning>
-        <Navbar />
-        {authModal}
-        <div className="w-[80%] z-0 mx-auto pt-[8rem] min-h-screen">
-          {children}
-        </div>
-        <Toaster />
+        <Providers>
+          <Navbar />
+          {authModal}
+          <div className="w-[80%] z-0 mx-auto pt-[8rem] min-h-screen">
+            {children}
+          </div>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

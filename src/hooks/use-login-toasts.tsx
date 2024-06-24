@@ -1,19 +1,21 @@
-import { buttonVariants } from '@/components/ui/Button'
+
+import Button from '@/components/ui/button'
 import { toast } from '@/hooks/use-toast'
 import Link from 'next/link'
 
-export const useCustomToasts = () => {
+export const useLoginToasts = () => {
   const loginToast = () => {
     const { dismiss } = toast({
       title: 'Login required.',
-      description: 'You need to be logged in to do that.',
+      description: 'You need to be logged in.',
       variant: 'destructive',
       action: (
         <Link
           onClick={() => dismiss()}
-          href='/sign-in'
-          className={buttonVariants({ variant: 'outline' })}>
-          Login
+          href='/login'
+          >
+            <Button className='hover:bg-gray-900 '>Login</Button>
+          
         </Link>
       ),
     })
