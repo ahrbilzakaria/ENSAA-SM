@@ -25,7 +25,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           {authModal}
-          <div className="w-[80%] z-0 mx-auto pt-[8rem] min-h-screen">
+          <div className="w-[90%] md:w-[80%] z-0 mx-auto pt-[8rem] min-h-screen">
             {children}
           </div>
           <Toaster />

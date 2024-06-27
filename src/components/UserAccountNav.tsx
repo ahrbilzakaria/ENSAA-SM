@@ -12,7 +12,6 @@ import {
 import { AtSign, LogOut, User as US } from "lucide-react";
 import { signOut } from "@/lib/auth";
 
-
 interface UserAccountNavProps {
   user: Pick<User, "email" | "image" | "name">;
 }
@@ -23,7 +22,11 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar className="outline-1 outline hover:outline-0 cursor-pointer outline-offset-2 outline-gray-200">
-            <AvatarImage src={user.image!} alt={user.name!} referrerPolicy="no-referrer" />
+            <AvatarImage
+              src={user.image!}
+              alt={user.name!}
+              referrerPolicy="no-referrer"
+            />
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
