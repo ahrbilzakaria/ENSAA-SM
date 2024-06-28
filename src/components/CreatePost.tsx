@@ -29,20 +29,20 @@ const CreatePost: FC<CreatePostProps> = ({ session }: CreatePostProps) => {
       <div className="flex w-full justify-between items-center gap-2 ">
         <Input
           readOnly
-          onClick={() => router.push(path + "/submit")}
+          onClick={() => router.push(path + "/post")}
           className=" rounded-md outline outline-2 outline-zinc-300"
           placeholder="What's on your mind?"
         />
         <div className="flex items-center gap-1">
           {" "}
           <Button
-            onClick={() => router.push(path + "/submit")}
+            onClick={() => router.push(path + "/post")}
             className="bg-gray-900 text-white p-2"
           >
             <Link></Link>
           </Button>
           <Button
-            onClick={() => router.push(path + "/submit")}
+            onClick={() => router.push(path + "/post")}
             className="bg-gray-900 text-white p-2"
           >
             <Image></Image>

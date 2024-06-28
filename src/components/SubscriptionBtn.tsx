@@ -24,7 +24,7 @@ const SubscriptionBtn: FC<SubscriptionBtnProps> = ({
 }: SubscriptionBtnProps) => {
   const router = useRouter();
   const { loginToast } = useLoginToasts();
-  const { mutate: Subscribe, isPending } = useMutation({
+  const { mutate: Subscribe, isPending: isSubscribing } = useMutation({
     mutationFn: async () => {
       const payload: SubscribeToSubredditPayload = {
         subredditId: subreddit.id,
@@ -55,17 +55,56 @@ const SubscriptionBtn: FC<SubscriptionBtnProps> = ({
       });
     },
   });
+  const { mutate: unSubscribe, isPending: isUnsubscribing } = useMutation({
+    mutationFn: async () => {
+      const payload: SubscribeToSubredditPayload = {
+        subredditId: subreddit.id,
+      };
+      const { data } = await axios.post("/api/subreddit/unsubscribe", payload);
+      return data as string;
+    },
+    onError: (err: Error) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 401) {
+          return loginToast();
+        }
+      }
+      toast({
+        title: "Error",
+        description: "There was an error",
+        variant: "destructive",
+      });
+    },
+    onSuccess: () => {
+      startTransition(() => {
+        router.refresh();
+      });
+      toast({
+        title: "Unsubscribed",
+        description: `You are no longer a member of c/${subreddit.name}`,
+        variant: "default",
+      });
+    },
+  });
 
   return (
     <div className="w-full">
       {isSubscribed ? (
         session?.user.id === subreddit.creatorId ? null : (
-          <Button className="w-full bg-red-600 hover:bg-red-400 text-white">
-            Unubscribe
+          <Button
+            disabled={isUnsubscribing}
+            onClick={unSubscribe}
+            className="w-full bg-red-600 hover:bg-red-400 text-white"
+          >
+            Unsubscribe
           </Button>
         )
       ) : (
-        <Button className="w-full bg-gray-900  text-white" onClick={Subscribe}>
+        <Button
+          disabled={isSubscribing}
+          className="w-full bg-gray-900  text-white"
+          onClick={Subscribe}
+        >
           Subscribe
         </Button>
       )}
